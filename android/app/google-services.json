@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1057019889842",
+    "project_id": "learn-9e8da",
+    "storage_bucket": "learn-9e8da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057019889842:android:e4e732eba070f371bee1ab",
+        "android_client_info": {
+          "package_name": "com.example.demo_crud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057019889842-04j10hfcijtjvb2fh5vr99vfm85e340o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4wdtjHY-kDsaEPbtNRwQ2qT_f_pyQAc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057019889842-04j10hfcijtjvb2fh5vr99vfm85e340o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057019889842:android:23e57a9c8c321447bee1ab",
+        "android_client_info": {
+          "package_name": "com.example.food_firebare_crud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057019889842-04j10hfcijtjvb2fh5vr99vfm85e340o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4wdtjHY-kDsaEPbtNRwQ2qT_f_pyQAc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057019889842-04j10hfcijtjvb2fh5vr99vfm85e340o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
