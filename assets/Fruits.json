@@ -10,31 +10,31 @@
       "name": "Banana",
       "images": "assets/banana.png",
       "price": "6.77",
-      "detail":"Bananas are the names of fruits of bananas; This is considered one of the most widely eaten fruits. Bananas are rooted from tropical areas in Southeast Asia and Australia."
+      "detail":"Bananas are the names of fruits of bananas; This is considered one of the most widely eaten fruits."
     },
     {
       "name": "Apple",
       "images": "assets/apple.png",
       "price": "5.99",
-      "detail":"Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart. As part of a healtful and varied diet."
+      "detail":"Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart."
     },
     {
       "name": "Berrial",
       "images": "assets/berries.png",
       "price": "12.2",
-      "detail":"Garden strawberries or simply calling strawberries are a sealed plant and flowering plants belonging to the Rosaceae family. Strawberries originated from the Americas and are given by European gardens."
+      "detail":"Garden strawberries or simply calling strawberries are a sealed plant and flowering plants belonging."
     },
     {
       "name": "Cucumbers",
       "images": "assets/duachuot.png",
       "price": "6.22",
-      "detail":"Cucumber is a common crop in the family of the pumpkin, is an important commercial fruit vegetable, it is grown for a long time in the world and becomes a food of many countries. The leading countries."
+      "detail":"Cucumber is a common crop in the family of the pumpkin, is an important commercial fruit vegetable"
     },
     {
       "name": "Watermelon",
       "images": "assets/duahau.png",
       "price": "5.99",
-      "detail":"Watermelon is a plant belonging to the Cucurbitaceae family, a flower -like plant -like plant originating from West Africa. It is grown to get fruit. Watermelon (Citrullus lanatus) is one."
+      "detail":"Watermelon is a plant belonging to the Cucurbitaceae family, a flower -like plant -like "
     }
   ]
 }
