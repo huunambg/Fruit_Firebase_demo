@@ -1,5 +1,7 @@
 import 'dart:convert';
-import 'dart:ffi';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_firebare_crud/Screens/home/components/cusstom_appbar.dart';
@@ -32,8 +34,10 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+
   final x = Service();
   List<Fruit> hihi = [];
+// add fruit
 
   void addFruit() async {
     final String response = await rootBundle.loadString('assets/Fruits.json');
@@ -49,10 +53,22 @@ class _HomepageState extends State<Homepage> {
     }
   }
 
+  void check() async {
+    final Check = FirebaseFirestore.instance
+        .collection('Fruits')
+        .doc()
+        .snapshots()
+        .length;
+    if (Check == 0) {
+      addFruit();
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
-    addFruit();
+    // check();
+    // addFruit();
     setState(() {});
     super.initState();
   }
@@ -61,101 +77,103 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CusstomAppBar(context), //Appbar
-        body: ListView(
-          padding: EdgeInsets.all(15),
-          children: [
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    // form Seach store
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(242, 243, 242, 1),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: TextField(
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                          label: Row(
-                            children: [
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Icon(Icons.search),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              CustomTextGilroy_Bold(text: "Seach store")
-                            ],
-                          ),
-                          border: InputBorder.none),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomBanner(), //banner
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomTextGilroy_Medium(text: "Exclusive Offer"),
-                      CustomTextBt(
-                        text: "See all",
-                        onpressed: () {},
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  //Listviews cua Exclusive Offer
-                  CustomCard(),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomTextGilroy_Medium(text: "Best Selling"),
-                      CustomTextBt(
-                        text: "See all",
-                        onpressed: () {},
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  //Listviews cua Best Selling
-                  CustomCard()
-                ],
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      appBar: CusstomAppBar(context), //Appbar
+      body: ListView(
+        padding: EdgeInsets.all(15),
+        children: [
+          Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CustomTextGilroy_Medium(text: "Groceries"),
-                CustomTextBt(
-                  text: "See all",
-                  onpressed: () {},
-                )
+                Container(
+                  // form Seach store
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(242, 243, 242, 1),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: TextField(
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                        label: Row(
+                          children: [
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Icon(Icons.search),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            CustomTextGilroy_Bold(text: "Seach store")
+                          ],
+                        ),
+                        border: InputBorder.none),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomBanner(), //banner
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomTextGilroy_Medium(text: "Exclusive Offer"),
+                    CustomTextBt(
+                      text: "See all",
+                      onpressed: () {},
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                //Listviews cua Exclusive Offer
+                CustomCard(),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomTextGilroy_Medium(text: "Best Selling"),
+                    CustomTextBt(
+                      text: "See all",
+                      onpressed: () {},
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                //Listviews cua Best Selling
+                CustomCard()
               ],
             ),
-            SizedBox(
-              height: 15,
-            ),
-            //Listviews cua Groceries
-            CustomCardMini(),
-            SizedBox(
-              height: 10,
-            ),
-          ],
-        ),
-        //bottom bar
-        bottomNavigationBar: Custom_BottomnavigationBar());
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CustomTextGilroy_Medium(text: "Groceries"),
+              CustomTextBt(
+                text: "See all",
+                onpressed: () {},
+              )
+            ],
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          //Listviews cua Groceries
+          CustomCardMini(),
+          SizedBox(
+            height: 10,
+          ),
+
+      
+        ],
+      ),
+      //bottom bar
+    );
   }
 }

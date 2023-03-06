@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_firebare_crud/Screens/home/home.dart';
+import 'package:food_firebare_crud/Screens/singin/login.dart';
+import 'package:food_firebare_crud/Screens/root.dart';
+import 'package:food_firebare_crud/main.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 
 
@@ -70,7 +73,7 @@ class _OnbordingpageState extends State<Onbordingpage> {
                     child: TextButton(
                         onPressed: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Home()));
+                              MaterialPageRoute(builder: (context) => Mainpage()));
                         },
                         child: CustomTextGilroy_Bold(text:
                           "Get Started",

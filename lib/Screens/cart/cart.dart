@@ -1,21 +1,212 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:food_firebare_crud/screens/cart/components/cusstom_floatingactionbutton_cart.dart';
+import 'package:food_firebare_crud/Screens/cart/components/cusstom_showModalBottomSheet.dart';
+import 'package:food_firebare_crud/screens/detail/components/custom_floatingactionbutton.dart';
+import 'package:food_firebare_crud/widgets/custom_text.dart';
 
-class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+import 'package:ionicons/ionicons.dart';
+
+class Cart extends StatefulWidget {
+  Cart({super.key});
 
   @override
-  State<CartPage> createState() => _CartPageState();
+  State<Cart> createState() => _CartState();
 }
 
-class _CartPageState extends State<CartPage> {
+class _CartState extends State<Cart> {
+  int sl = 1;
+  double sum = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
-     backgroundColor: Colors.transparent,
-    foregroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
+        centerTitle: true,
+        title: Text("My Cart"),
       ),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('Carts').snapshots(),
+          builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text("Loi "),
+              );
+            } else if (snapshot.hasData) {
+              return ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    sum = double.parse(
+                            snapshot.data!.docs[index]['price'].toString()) *
+                        double.parse(
+                            snapshot.data!.docs[index]['quantity'].toString());
+                    return Container(
+                      decoration: BoxDecoration(
+                          border: Border(
+                              top: BorderSide(
+                                  color: Color.fromARGB(255, 239, 231, 231)),
+                              bottom: BorderSide(
+                                  color: Color.fromARGB(255, 247, 234, 234)))),
+                      margin: EdgeInsets.only(right: 10),
+                      child: SizedBox(
+                        width: 180,
+                        child: InkWell(
+                          onTap: () {},
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(15, 15, 5, 15),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Image.asset(
+                                  "${snapshot.data!.docs[index]['image'].toString()}",
+                                  height: 100,
+                                  width: 100,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CustomTextGilroy_Bold(
+                                      text:
+                                          "${snapshot.data!.docs[index]['name'].toString()}",
+                                      size: 19,
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    CustomTextGilroy(text: "1kg,Price"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                            height: 50,
+                                            width: 50,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                border: Border.all(
+                                                    color: Color.fromARGB(
+                                                        255, 197, 188, 188),
+                                                    width: 1)),
+                                            child: Center(
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    sl--;
+                                                  });
+                                                },
+                                                icon: Image.asset(
+                                                  "assets/minus.png",
+                                                  height: 15,
+                                                  width: 15,
+                                                ),
+                                              ),
+                                            )),
+                                        SizedBox(
+                                          width: 7,
+                                        ),
+                                        CustomTextGilroy_Bold(
+                                          text:
+                                              "${snapshot.data!.docs[index]['quantity'].toString()}",
+                                          size: 20,
+                                        ),
+                                        SizedBox(
+                                          width: 7,
+                                        ),
+                                        Container(
+                                            height: 50,
+                                            width: 50,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                border: Border.all(
+                                                    color: Color.fromARGB(
+                                                        255, 197, 188, 188),
+                                                    width: 1)),
+                                            child: Center(
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    sl++;
+                                                  });
+                                                },
+                                                icon: Icon(Ionicons.add),
+                                              ),
+                                            ))
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () async {
+                                          final dele = FirebaseFirestore
+                                              .instance
+                                              .collection('Carts')
+                                              .doc(
+                                                  '${snapshot.data!.docs[index]['id'].toString()}');
+                                          dele.delete();
+                                        },
+                                        icon: Image.asset(
+                                          "assets/delete.png",
+                                          height: 15,
+                                          width: 15,
+                                        )),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    CustomTextGilroy_Bold(
+                                      text:
+                                          "S${snapshot.data!.docs[index]['price'].toString()}",
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
+      floatingActionButton: CusstomFloatingActionButtonCart(
+          onpresed: () {
+            showModalBottomSheet(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30))),
+              context: context,
+              builder: (context) {return
+                CusstomItemshowModalBottomSheet();
+              },
+            );
+          },
+          text: "Go To Checkout",sum: 12.96,),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

@@ -1,9 +1,13 @@
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_firebare_crud/const/colors.dart';
 import 'package:food_firebare_crud/model/class.dart';
+import 'package:food_firebare_crud/model/service.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 import 'package:ionicons/ionicons.dart';
-
 import 'components/custom_floatingactionbutton.dart';
 
 // day la man hinh chi tiet
@@ -16,6 +20,15 @@ class Detail extends StatefulWidget {
 }
 
 class _DetailState extends State<Detail> {
+  Future<QuerySnapshot<Map<String, dynamic>>> data() async {
+    final data = FirebaseFirestore.instance.collection("Carts").get();
+    return data;
+  }
+
+  void inp() {
+    print(data);
+  }
+
   int sl = 1;
   @override
   Widget build(BuildContext context) {
@@ -81,10 +94,16 @@ class _DetailState extends State<Detail> {
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              sl++;
+                              if (sl != 1) {
+                                sl--;
+                              }
                             });
                           },
-                          icon: Icon(Ionicons.add),
+                          icon: Image.asset(
+                            "assets/minus.png",
+                            height: 15,
+                            width: 15,
+                          ),
                         ),
                         Container(
                           height: 50,
@@ -102,10 +121,11 @@ class _DetailState extends State<Detail> {
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              sl--;
+                              sl++;
                             });
+                            inp();
                           },
-                          icon: Icon(Icons.exposure_minus_1_outlined),
+                          icon: Icon(Ionicons.add),
                         ),
                       ],
                     ),
@@ -197,8 +217,22 @@ class _DetailState extends State<Detail> {
         ],
       ),
       //button
-      floatingActionButton:
-          CusstomFloatingActionButton(onpresed: () {}, text: "Add To Basket"),
+      floatingActionButton: CusstomFloatingActionButton(
+          onpresed: () {
+            final x = Service();
+            final cart = Cart(quantity: sl);
+            cart.name = widget.f['name'];
+            cart.detail = widget.f['detail'];
+            cart.price = widget.f['price'];
+            cart.image = widget.f['image'];
+            x.addCart(cart);
+            sl = 1;
+            CherryToast.success(
+                    title:
+                        Text("${widget.f['name']} have been added to the cart"))
+                .show(context);
+          },
+          text: "Add To Basket"),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

@@ -14,13 +14,14 @@ class CustomBanner extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       height: 120,
+      width: double.infinity,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Image.asset(
             "assets/vegetable.png",
-            height: 120,
-            width: 120,
+            height: 90,
+            width: 90,
           ),
           SizedBox(
             width: 10,

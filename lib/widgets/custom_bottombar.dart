@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 class Custom_BottomnavigationBar extends StatelessWidget {
-  const Custom_BottomnavigationBar({super.key});
-
+  const Custom_BottomnavigationBar({super.key, required this.currentindex});
+  final int currentindex;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(

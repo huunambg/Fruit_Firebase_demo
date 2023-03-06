@@ -11,6 +11,12 @@ class Service {
     await docFruit.set(fruit.toJson());
   }
 
+   Future addCart(Cart cart) async {
+    final docCart = FirebaseFirestore.instance.collection('Carts').doc();
+    cart.id = docCart.id;
+    await docCart.set(cart.toJson());
+  }
+
 
   }
 

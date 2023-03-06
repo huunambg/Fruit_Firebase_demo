@@ -1,9 +1,12 @@
+import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_firebare_crud/Screens/detail/detail.dart';
 import 'package:food_firebare_crud/model/class.dart';
+import 'package:food_firebare_crud/model/service.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
+import 'package:ndialog/ndialog.dart';
 
 // Day la listviews card hozirol tu db cua Exclusive Offer,Best Selling,
 class CustomCard extends StatefulWidget {
@@ -14,6 +17,9 @@ class CustomCard extends StatefulWidget {
 }
 
 class _CustomCardState extends State<CustomCard> {
+  final namecontroller = TextEditingController();
+  final pricecontroller = TextEditingController();
+  final detailcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,9 +37,9 @@ class _CustomCardState extends State<CustomCard> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: EdgeInsets.only(right: 10),
+                      margin: EdgeInsets.only(right: 5),
                       child: SizedBox(
-                        width: 180,
+                        width: 170,
                         child: Card(
                           elevation: 0.4,
                           shape: RoundedRectangleBorder(
@@ -43,10 +49,108 @@ class _CustomCardState extends State<CustomCard> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(20),
                             onLongPress: () async {
-                               final dele = FirebaseFirestore.instance
-                                  .collection('Fruits')
-                                  .doc('${snapshot.data!.docs[index]['id'].toString()}');
-                              dele.delete();
+                              NDialog(
+                                dialogStyle: DialogStyle(titleDivider: true),
+                                title: Text("Mời bạn chọn chức năng"),
+                                content: Text("hihi"),
+                                actions: <Widget>[
+                                  TextButton(
+                                      child: Text("Sửa"),
+                                      onPressed: () {
+                                        namecontroller.text =
+                                            snapshot.data!.docs[index]['name'];
+                                        pricecontroller.text = snapshot
+                                            .data!.docs[index]['price']
+                                            .toString();
+                                        detailcontroller.text = snapshot
+                                            .data!.docs[index]['detail'];
+
+                                        Navigator.pop(context);
+                                        NDialog(
+                                          dialogStyle:
+                                              DialogStyle(titleDivider: true),
+                                          title: Text("Nhập thông tin cần sửa"),
+                                          content: Column(
+                                            children: [
+                                              TextField(
+                                                  controller: namecontroller,
+                                                  decoration: InputDecoration(
+                                                      labelText: "Tên",
+                                                      border: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20)))),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              TextField(
+                                                  controller: pricecontroller,
+                                                  decoration: InputDecoration(
+                                                      labelText: "Giá",
+                                                      border: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20)))),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              TextField(
+                                                  controller: detailcontroller,
+                                                  decoration: InputDecoration(
+                                                      labelText: "Chi Tiết",
+                                                      border: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20)))),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                            ],
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                                child: Text("Okay"),
+                                                onPressed: () {
+                                                  final user = FirebaseFirestore
+                                                      .instance
+                                                      .collection('Fruits')
+                                                      .doc(
+                                                          '${snapshot.data.docs[index]['id']}');
+                                                  user.update({
+                                                    'name':
+                                                        '${namecontroller.text}',
+                                                    'price':
+                                                        '${pricecontroller.text}',
+                                                    'detail':
+                                                        '${detailcontroller.text}'
+                                                  });
+                                                  namecontroller.text = '';
+                                                  pricecontroller.text = '';
+                                                  detailcontroller.text = '';
+                                                  Navigator.pop(context);
+                                                }),
+                                            TextButton(
+                                                child: Text("Close"),
+                                                onPressed: () =>
+                                                    Navigator.pop(context)),
+                                          ],
+                                        ).show(context);
+                                      }),
+                                  TextButton(
+                                      child: Text("Xóa"),
+                                      onPressed: () {
+                                        final dele = FirebaseFirestore.instance
+                                            .collection('Fruits')
+                                            .doc(
+                                                '${snapshot.data!.docs[index]['id'].toString()}');
+                                        dele.delete();
+                                        Navigator.pop(context);
+                                      }),
+                                ],
+                              ).show(context);
                             },
                             onTap: () {
                               Navigator.push(
@@ -88,7 +192,7 @@ class _CustomCardState extends State<CustomCard> {
                                     children: [
                                       CustomTextGilroy_Bold(
                                         text:
-                                            "S${snapshot.data!.docs[index]['price'].toString()} .",
+                                            "\$${snapshot.data!.docs[index]['price'].toString()} .",
                                       ),
                                       SizedBox(
                                         width: 14,
@@ -107,7 +211,22 @@ class _CustomCardState extends State<CustomCard> {
                                             color: Colors.white,
                                           ),
                                           onPressed: () {
-                                            print("nam");
+                                            final x = Service();
+                                            final cart = Cart(quantity: 1);
+                                            cart.name = snapshot
+                                                .data!.docs[index]['name'];
+                                            cart.detail = snapshot
+                                                .data!.docs[index]['detail'];
+                                            cart.price = snapshot
+                                                .data!.docs[index]['price'];
+                                            cart.image = snapshot
+                                                .data!.docs[index]['image'];
+                                            x.addCart(cart);
+
+                                            CherryToast.success(
+                                                    title: Text(
+                                                        "${snapshot.data!.docs[index]['name']} have been added to the cart"))
+                                                .show(context);
                                           },
                                         ),
                                       )
