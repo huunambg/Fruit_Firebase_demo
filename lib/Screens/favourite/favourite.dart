@@ -10,6 +10,7 @@ import 'package:food_firebare_crud/Screens/cart/components/cusstom_showModalBott
 import 'package:food_firebare_crud/screens/detail/components/custom_floatingactionbutton.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 import 'package:ionicons/ionicons.dart';
+
 // Man hinh Favorite
 class FavouriteScreen extends StatefulWidget {
   FavouriteScreen({super.key});
@@ -23,6 +24,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+            side: BorderSide(color: Color.fromARGB(255, 239, 231, 231))),
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -46,8 +49,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                     return Container(
                       decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(
-                                  color: Color.fromARGB(255, 239, 231, 231)),
                               bottom: BorderSide(
                                   color: Color.fromARGB(255, 247, 234, 234)))),
                       margin: EdgeInsets.only(right: 10),
@@ -97,8 +98,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             }
           }),
       floatingActionButton: CusstomFloatingActionButton(
-        onpresed: () {
-        },
+        onpresed: () {},
         text: "Add All to Cart",
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

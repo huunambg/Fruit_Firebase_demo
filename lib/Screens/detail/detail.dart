@@ -82,8 +82,9 @@ class _DetailState extends State<Detail> {
                       onPressed: () {
                         addfavourites();
                         CherryToast.success(
-                            title: Text(
-                                "${widget.f['name']} have been added to Favourite"));
+                                title: Text(
+                                    "${widget.f['name']} have been added to Favourite"))
+                            .show(context);
                       },
                     )
                   ],
@@ -233,6 +234,7 @@ class _DetailState extends State<Detail> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
+
 // them vao muc Favourite
   void addfavourites() {
     final _fruit = new Fruit();
@@ -243,7 +245,8 @@ class _DetailState extends State<Detail> {
     _fruit.image = widget.f['image'];
     x..addFavourite(_fruit);
   }
-// kiem tra truoc khi them vao gio hang vd: hang da co thi chi can tang sl 
+
+// kiem tra truoc khi them vao gio hang vd: hang da co thi chi can tang sl
   void addtoCart() {
     final x = Service();
     int c = 0;
@@ -272,6 +275,7 @@ class _DetailState extends State<Detail> {
       x.addCart(cart);
     }
   }
+
   // get data va day vao list de xu ly
   fetchdatabaselist() async {
     List items = [];

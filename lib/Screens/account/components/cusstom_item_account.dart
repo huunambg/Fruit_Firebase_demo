@@ -14,7 +14,7 @@ class CusstomItemAcount extends StatelessWidget {
     return GestureDetector(
       onTap: onpressed,
       child: Container(
-        margin: EdgeInsets.only(top: 8),
+        height: 45,
         decoration: BoxDecoration(
             border: Border(
                 bottom: BorderSide(

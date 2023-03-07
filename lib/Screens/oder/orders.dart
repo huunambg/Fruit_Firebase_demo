@@ -9,6 +9,7 @@ import 'package:food_firebare_crud/screens/detail/components/custom_floatingacti
 import 'package:food_firebare_crud/screens/oder/track_oder.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 import 'package:ionicons/ionicons.dart';
+
 //man hinh hien thi danh muc cac san pham da order
 class Orders extends StatefulWidget {
   Orders({super.key});
@@ -24,6 +25,8 @@ class _OrdersState extends State<Orders> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+            side: BorderSide(color: Color.fromARGB(255, 239, 231, 231))),
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
@@ -49,8 +52,6 @@ class _OrdersState extends State<Orders> {
                     return Container(
                       decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(
-                                  color: Color.fromARGB(255, 239, 231, 231)),
                               bottom: BorderSide(
                                   color: Color.fromARGB(255, 247, 234, 234)))),
                       margin: EdgeInsets.only(right: 10),
