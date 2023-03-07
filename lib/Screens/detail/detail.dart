@@ -33,11 +33,14 @@ class _DetailState extends State<Detail> {
   int sl = 1;
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView(
         children: [
           Container(
             // khu vuc anh
+            height: h * 0.4,
             decoration: BoxDecoration(
                 color: Color.fromARGB(255, 233, 231, 231),
                 borderRadius: BorderRadius.only(
@@ -58,7 +61,7 @@ class _DetailState extends State<Detail> {
                 ),
                 Center(
                   child: Image.asset("${widget.f['image']}",
-                      height: 250, width: 250),
+                      height: 200, width: 200),
                 ),
               ],
             ),
@@ -74,9 +77,7 @@ class _DetailState extends State<Detail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomTextGilroy_Bold(
-                      text: "${widget.f['name']}",
-                      size: 25,
-                    ),
+                        text: "${widget.f['name']}", size: 20),
                     IconButton(
                       icon: Icon(Ionicons.heart_outline, size: 30),
                       onPressed: () {
@@ -141,9 +142,10 @@ class _DetailState extends State<Detail> {
                   ],
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 Container(
+                  height: h * 0.35,
                   child: Column(
                     children: [
                       Row(
@@ -157,14 +159,14 @@ class _DetailState extends State<Detail> {
                         ],
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
                       CustomTextGilroy(
                         text: "${widget.f['detail']}",
-                        size: 17,
+                        size: 15,
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
