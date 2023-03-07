@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_firebare_crud/const/colors.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 
+// floattingacction button
 class CusstomFloatingActionButtonCart extends StatefulWidget {
   const CusstomFloatingActionButtonCart(
       {super.key, required this.onpresed, required this.text, this.sum});
@@ -38,14 +39,14 @@ class _CusstomFloatingActionButtonCartState
           Positioned(
             right: 20,
             child: Container(
-              padding: EdgeInsets.all(2),
-               decoration: BoxDecoration(
-                color: Color.fromARGB(31, 96, 92, 92)
-                ,borderRadius: BorderRadius.all(Radius.circular(5))),
+                padding: EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(31, 96, 92, 92),
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
                 child: CustomTextGilroy_Bold(
-              text: "${widget.sum.toString()}",
-              color: Color.fromARGB(255, 255, 255, 255),
-            )),
+                  text: "\$${widget.sum.toString()}",
+                  color: Color.fromARGB(255, 255, 255, 255),
+                )),
           )
         ],
       ),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:food_firebare_crud/Screens/singin/login.dart';
 import 'package:food_firebare_crud/const/colors.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
-
+// day la man hinh dang ki
 class Singup extends StatelessWidget {
   const Singup({super.key});
 
@@ -126,7 +126,7 @@ class _sgState extends State<sg> {
       ),
     );
   }
-
+// su kien kiem tra  tai khoan so voi database
   void onpressed() {
     if (emailcontroller.text != '' && passwordcontroller.text != '') {
       if (passwordcontroller.text != retypepassword.text) {

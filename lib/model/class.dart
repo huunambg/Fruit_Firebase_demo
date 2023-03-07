@@ -1,6 +1,7 @@
 // model
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -21,10 +22,32 @@ class Fruit {
       };
 }
 
-class Cart extends Fruit {
+class Carts extends Fruit {
   String? id;
   int? quantity;
-  Cart({this.quantity}) : super();
+  String? name;
+  String? image;
+  String? detail;
+  String? price;
+  Carts(
+      {this.id, this.quantity, this.name, this.price, this.detail, this.image});
+
+  Carts.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
+      : id = snapshot['id'],
+        name = snapshot['name'],
+        image = snapshot['image'],
+        detail = snapshot['detail'],
+        quantity = snapshot['quantity'],
+        price = snapshot['price'];
+
+  Carts.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        image = json['image'],
+        price = json['price'],
+        detail = json['detail'],
+        quantity = json['quantity'];
+
   Map<String, dynamic> toJson() => {
         'quantity': quantity,
         'id': id,
@@ -44,6 +67,7 @@ class Oder {
   String? detailOder;
   int? quantity;
   String? expected;
+  DateTime? dateOder;
 
   Oder(
       {this.idOder,
@@ -51,7 +75,8 @@ class Oder {
       this.money,
       this.statusOder,
       this.image,
-      this.quantity,this.expected});
+      this.quantity,
+      this.expected,this.dateOder,this.detailOder});
 
   Map<String, dynamic> toJson() => {
         'idOder': idOder,
@@ -61,6 +86,7 @@ class Oder {
         'detailOder': detailOder,
         'image': image,
         'quantity': quantity,
-        'expected':expected
+        'expected': expected,
+        'dateOder': dateOder
       };
 }

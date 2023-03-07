@@ -8,9 +8,8 @@ import 'package:food_firebare_crud/Screens/cart/components/cusstom_showModalBott
 import 'package:food_firebare_crud/screens/detail/components/custom_floatingactionbutton.dart';
 import 'package:food_firebare_crud/screens/oder/track_oder.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
-
 import 'package:ionicons/ionicons.dart';
-
+//man hinh hien thi danh muc cac san pham da order
 class Orders extends StatefulWidget {
   Orders({super.key});
 
@@ -74,8 +73,8 @@ class _OrdersState extends State<Orders> {
                               children: [
                                 Image.asset(
                                   "${snapshot.data!.docs[index]['image'].toString()}",
-                                  height: 100,
-                                  width: 100,
+                                  height: 70,
+                                  width: 70,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,17 +93,17 @@ class _OrdersState extends State<Orders> {
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    CustomTextGilroy_Bold(
+                                    CustomTextGilroy(
                                       text:
                                           "Quantity: ${snapshot.data!.docs[index]['quantity'].toString()}",
-                                      size: 20,
+                                      size: 16,
                                     ),
-
-                                          
+                                    CustomTextGilroy(
+                                      text:
+                                          "Oder-Id: ${snapshot.data!.docs[index]['idOder']}",
+                                      size: 11,
+                                    ),
                                   ],
-                                ),
-                                SizedBox(
-                                  width: 20,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -116,7 +115,7 @@ class _OrdersState extends State<Orders> {
                                     ),
                                     CustomTextGilroy_Bold(
                                       text:
-                                          "Total: \$${snapshot.data!.docs[index]['money'].toString()}",
+                                          "Total: \$${double.parse(snapshot.data!.docs[index]['money'].toString()).roundToDouble().toString()}",
                                     ),
                                   ],
                                 )

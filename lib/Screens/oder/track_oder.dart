@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:food_firebare_crud/model/class.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 
+//Man hinh Track oder
 class TrackOder extends StatefulWidget {
   const TrackOder({super.key, this.Order});
   final Order;
@@ -33,7 +34,7 @@ class _TrackOderState extends State<TrackOder> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextGilroy(text: "Order ID:  3354654654526"),
-                CustomTextGilroy(text: "Order date: 03/12/2023"),
+                CustomTextGilroy(text: "Expected: ${widget.Order['expected']}"),
               ],
             ),
           ),
@@ -46,7 +47,7 @@ class _TrackOderState extends State<TrackOder> {
                     top: BorderSide(
                         width: 1, color: Color.fromARGB(255, 222, 212, 212)))),
             child: EasyStepper(
-              activeStep: int.parse(widget.Order['statusOder']),
+              activeStep: int.parse(widget.Order['statusOder'].toString()),
               lineLength: 40,
               stepShape: StepShape.rRectangle,
               stepBorderRadius: 15,
@@ -122,7 +123,8 @@ class _TrackOderState extends State<TrackOder> {
                       ],
                     ),
                     CustomTextGilroy_Bold(
-                      text: "Total: \$${widget.Order['money'].toString()}",
+                      text:
+                          "Total: \$${double.parse(widget.Order['money'].toString()).roundToDouble().toString()}",
                     )
                   ],
                 ),
@@ -140,7 +142,7 @@ class _TrackOderState extends State<TrackOder> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextGilroy_Bold(
-                    text: "Detail: ${widget.Order['detail']}"),
+                    text: "Detail: ${widget.Order['detailOder']}"),
                 CustomTextGilroy_Bold(
                     text: "Expected: ${widget.Order['expected']}"),
               ],

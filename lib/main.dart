@@ -6,7 +6,6 @@ import 'package:food_firebare_crud/Screens/singin/login.dart';
 import 'package:food_firebare_crud/Screens/root.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 import 'Screens/onbording/onbording.dart';
-
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+//Main page dung de kiem tra login
 class Mainpage extends StatelessWidget {
   const Mainpage({super.key});
 

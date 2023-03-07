@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:food_firebare_crud/const/colors.dart';
 import 'package:food_firebare_crud/model/class.dart';
 import 'package:food_firebare_crud/model/service.dart';
+import 'package:food_firebare_crud/screens/cart/cart.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 import 'package:ionicons/ionicons.dart';
 import 'components/custom_floatingactionbutton.dart';
@@ -20,13 +21,13 @@ class Detail extends StatefulWidget {
 }
 
 class _DetailState extends State<Detail> {
-  Future<QuerySnapshot<Map<String, dynamic>>> data() async {
-    final data = FirebaseFirestore.instance.collection("Carts").get();
-    return data;
-  }
+  final cart = Carts();
+  List<Carts> carts = [];
 
-  void inp() {
-    print(data);
+  @override
+  void initState() {
+    super.initState();
+    fetchdatabaselist();
   }
 
   int sl = 1;
@@ -76,9 +77,14 @@ class _DetailState extends State<Detail> {
                       text: "${widget.f['name']}",
                       size: 25,
                     ),
-                    Icon(
-                      Ionicons.heart_outline,
-                      size: 30,
+                    IconButton(
+                      icon: Icon(Ionicons.heart_outline, size: 30),
+                      onPressed: () {
+                        addfavourites();
+                        CherryToast.success(
+                            title: Text(
+                                "${widget.f['name']} have been added to Favourite"));
+                      },
                     )
                   ],
                 ),
@@ -99,15 +105,11 @@ class _DetailState extends State<Detail> {
                               }
                             });
                           },
-                          icon: Image.asset(
-                            "assets/minus.png",
-                            height: 15,
-                            width: 15,
-                          ),
+                          icon: Icon(Ionicons.remove_outline),
                         ),
                         Container(
-                          height: 50,
-                          width: 50,
+                          height: 40,
+                          width: 40,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               border: Border.all(
@@ -123,9 +125,11 @@ class _DetailState extends State<Detail> {
                             setState(() {
                               sl++;
                             });
-                            inp();
                           },
-                          icon: Icon(Ionicons.add),
+                          icon: Icon(
+                            Ionicons.add,
+                            color: AppColor.green,
+                          ),
                         ),
                       ],
                     ),
@@ -219,21 +223,73 @@ class _DetailState extends State<Detail> {
       //button
       floatingActionButton: CusstomFloatingActionButton(
           onpresed: () {
-            final x = Service();
-            final cart = Cart(quantity: sl);
-            cart.name = widget.f['name'];
-            cart.detail = widget.f['detail'];
-            cart.price = widget.f['price'];
-            cart.image = widget.f['image'];
-            x.addCart(cart);
-            sl = 1;
             CherryToast.success(
                     title:
                         Text("${widget.f['name']} have been added to the cart"))
                 .show(context);
+            addtoCart();
           },
           text: "Add To Basket"),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+// them vao muc Favourite
+  void addfavourites() {
+    final _fruit = new Fruit();
+    final x = new Service();
+    _fruit.name = widget.f['name'];
+    _fruit.detail = widget.f['detail'];
+    _fruit.price = widget.f['price'];
+    _fruit.image = widget.f['image'];
+    x..addFavourite(_fruit);
+  }
+// kiem tra truoc khi them vao gio hang vd: hang da co thi chi can tang sl 
+  void addtoCart() {
+    final x = Service();
+    int c = 0;
+    int index = 0;
+    if (carts.length != 0) {
+      for (int i = 0; i < carts.length; i++) {
+        if (widget.f['name'] == carts[i].name) {
+          c++;
+          index = i;
+        }
+      }
+    } else {
+      print("Ko co du lieu");
+    }
+    if (c > 0) {
+      int? temp = carts[index].quantity! + sl;
+      final r = FirebaseFirestore.instance.collection('Carts');
+      r.doc("${carts[index].id}").update({'quantity': temp});
+    } else {
+      cart.id = widget.f['id'];
+      cart.name = widget.f['name'];
+      cart.detail = widget.f['detail'];
+      cart.price = widget.f['price'];
+      cart.image = widget.f['image'];
+      cart.quantity = sl;
+      x.addCart(cart);
+    }
+  }
+  // get data va day vao list de xu ly
+  fetchdatabaselist() async {
+    List items = [];
+    dynamic _cart = await Service().getData();
+    if (_cart == null) {
+      print('error');
+    } else {
+      items = _cart;
+      items.forEach((element) {
+        Carts a = new Carts(
+            id: element['id'],
+            name: element['name'],
+            image: element['image'],
+            price: element['price'],
+            detail: element['detail'],
+            quantity: element['quantity']);
+        carts.add(a);
+      });
+    }
   }
 }

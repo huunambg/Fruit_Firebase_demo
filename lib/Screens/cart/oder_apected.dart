@@ -7,7 +7,7 @@ import 'package:food_firebare_crud/Screens/root.dart';
 import 'package:food_firebare_crud/model/class.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 import 'package:food_firebare_crud/screens/oder/orders.dart';
-
+// day la man hinh Thong bao oder thanh cong
 class OderApected extends StatelessWidget {
   const OderApected({super.key});
 

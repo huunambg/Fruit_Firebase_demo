@@ -8,7 +8,6 @@ import 'package:food_firebare_crud/Screens/home/components/cusstom_appbar.dart';
 import 'package:food_firebare_crud/model/class.dart';
 import 'package:food_firebare_crud/model/service.dart';
 import 'package:food_firebare_crud/widgets/custom_banner.dart';
-import 'package:food_firebare_crud/widgets/custom_bottombar.dart';
 import 'package:food_firebare_crud/widgets/custom_button.dart';
 import 'package:food_firebare_crud/widgets/custom_card.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
@@ -34,10 +33,9 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-
   final x = Service();
   List<Fruit> hihi = [];
-// add fruit
+// add fruit tu json vao firebase
 
   void addFruit() async {
     final String response = await rootBundle.loadString('assets/Fruits.json');
@@ -53,21 +51,8 @@ class _HomepageState extends State<Homepage> {
     }
   }
 
-  void check() async {
-    final Check = FirebaseFirestore.instance
-        .collection('Fruits')
-        .doc()
-        .snapshots()
-        .length;
-    if (Check == 0) {
-      addFruit();
-    }
-  }
-
   @override
   void initState() {
-    // TODO: implement initState
-    // check();
     // addFruit();
     setState(() {});
     super.initState();
@@ -169,8 +154,6 @@ class _HomepageState extends State<Homepage> {
           SizedBox(
             height: 10,
           ),
-
-      
         ],
       ),
       //bottom bar

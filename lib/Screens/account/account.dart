@@ -43,9 +43,9 @@ class _AccountState extends State<Account> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: 7,
+                        width: 2,
                       ),
-                      CustomTextGilroy_Bold(text: "Afsar Hossen "),
+                      CustomTextGilroy_Bold(text: "Hi!  "),
                       Icon(
                         Icons.auto_fix_high_outlined,
                         size: 15,
@@ -62,6 +62,7 @@ class _AccountState extends State<Account> {
       body: Container(
         padding: EdgeInsets.only(left: 12, right: 12),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CusstomItemAcount(
@@ -100,24 +101,27 @@ class _AccountState extends State<Account> {
               img: "assets/about.png",
               text: "About ",
             ),
+
+            //nut bam sigout
             Center(
-              child: Container(
-                  margin: EdgeInsets.only(bottom: 15),
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(31, 114, 110, 110),
-                      borderRadius: BorderRadius.circular(15)),
-                  height: 50,
-                  width: 250,
-                  child: Center(
-                    child: TextButton(
-                        child: CustomTextGilroy_Bold(
-                          text: "Singout",
-                          color: AppColor.green,
-                        ),
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut();
-                        }),
-                  )),
+              child: GestureDetector(
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                },
+                child: Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    decoration: BoxDecoration(
+                        color: Color.fromARGB(31, 114, 110, 110),
+                        borderRadius: BorderRadius.circular(15)),
+                    height: 50,
+                    width: 250,
+                    child: Center(
+                      child: CustomTextGilroy_Bold(
+                        text: "Singout",
+                        color: AppColor.green,
+                      ),
+                    )),
+              ),
             ),
           ],
         ),

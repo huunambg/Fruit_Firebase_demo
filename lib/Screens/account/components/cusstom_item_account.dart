@@ -14,14 +14,14 @@ class CusstomItemAcount extends StatelessWidget {
     return GestureDetector(
       onTap: onpressed,
       child: Container(
-        padding: EdgeInsets.all(3),
+        margin: EdgeInsets.only(top: 8),
         decoration: BoxDecoration(
             border: Border(
                 bottom: BorderSide(
                     width: 1, color: Color.fromARGB(31, 110, 102, 102)))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,

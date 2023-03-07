@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:food_firebare_crud/Screens/singup/singup.dart';
 import 'package:food_firebare_crud/const/colors.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
-
+// day la man hinh login
 class Login extends StatelessWidget {
   const Login({super.key});
 

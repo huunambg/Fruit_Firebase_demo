@@ -4,10 +4,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:food_firebare_crud/screens/account/account.dart';
 import 'package:food_firebare_crud/screens/cart/cart.dart';
+import 'package:food_firebare_crud/screens/explore/explore.dart';
+import 'package:food_firebare_crud/screens/favourite/favourite.dart';
 import 'package:food_firebare_crud/screens/home/home.dart';
 import 'package:ionicons/ionicons.dart';
 import 'oder/track_oder.dart';
-
+// Day la man hinh goc de dieu huong cac man hinh thong qua  BottomNagavitonBar
 class Root extends StatefulWidget {
   const Root({super.key});
   @override
@@ -15,21 +17,8 @@ class Root extends StatefulWidget {
 }
 
 class _RootState extends State<Root> {
-  final tabs = [
-    Home(),
-    Container(
-      child: Center(
-        child: Text("Explore"),
-      ),
-    ),
-    Cart(),
-    Container(
-      child: Center(
-        child: Text("Favourite"),
-      ),
-    ),
-    Account()
-  ];
+  // danh sach cac man hinh(tabs)
+  final tabs = [Home(), ExploreScreen(), Cart(), FavouriteScreen(), Account()];
   int _curentindex = 0;
 
   @override

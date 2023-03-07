@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_firebare_crud/const/colors.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 
-
+// Floating acction button
 class CusstomFloatingActionButton extends StatelessWidget {
   const CusstomFloatingActionButton({super.key, required this.onpresed, required this.text});
   final GestureTapCallback onpresed;

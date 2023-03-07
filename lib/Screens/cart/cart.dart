@@ -3,9 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:food_firebare_crud/const/colors.dart';
+import 'package:food_firebare_crud/model/class.dart';
+import 'package:food_firebare_crud/model/service.dart';
 import 'package:food_firebare_crud/screens/cart/components/cusstom_floatingactionbutton_cart.dart';
 import 'package:food_firebare_crud/Screens/cart/components/cusstom_showModalBottomSheet.dart';
-import 'package:food_firebare_crud/screens/detail/components/custom_floatingactionbutton.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 
 import 'package:ionicons/ionicons.dart';
@@ -18,8 +20,14 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  int sl = 1;
   double sum = 0;
+  List<Carts> carts = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchdatabaselist();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,10 +51,6 @@ class _CartState extends State<Cart> {
                   scrollDirection: Axis.vertical,
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
-                    sum = double.parse(
-                            snapshot.data!.docs[index]['price'].toString()) *
-                        double.parse(
-                            snapshot.data!.docs[index]['quantity'].toString());
                     return Container(
                       decoration: BoxDecoration(
                           border: Border(
@@ -90,8 +94,8 @@ class _CartState extends State<Cart> {
                                     Row(
                                       children: [
                                         Container(
-                                            height: 50,
-                                            width: 50,
+                                            height: 40,
+                                            width: 40,
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(15),
@@ -103,14 +107,29 @@ class _CartState extends State<Cart> {
                                               child: IconButton(
                                                 onPressed: () {
                                                   setState(() {
+                                                    double temprice =
+                                                        double.parse(snapshot
+                                                            .data!
+                                                            .docs[index]
+                                                                ['price']
+                                                            .toString());
+                                                    sum = sum - temprice;
+                                                    int sl = int.parse(snapshot
+                                                        .data!
+                                                        .docs[index]['quantity']
+                                                        .toString());
                                                     sl--;
+                                                    final r = FirebaseFirestore
+                                                        .instance
+                                                        .collection("Carts")
+                                                        .doc(
+                                                            "${snapshot.data!.docs[index]['id'].toString()}");
+                                                    r.update({'quantity': sl});
+                                                    ;
                                                   });
                                                 },
-                                                icon: Image.asset(
-                                                  "assets/minus.png",
-                                                  height: 15,
-                                                  width: 15,
-                                                ),
+                                                icon: Icon(
+                                                    Ionicons.remove_outline),
                                               ),
                                             )),
                                         SizedBox(
@@ -125,8 +144,8 @@ class _CartState extends State<Cart> {
                                           width: 7,
                                         ),
                                         Container(
-                                            height: 50,
-                                            width: 50,
+                                            height: 40,
+                                            width: 40,
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(15),
@@ -138,10 +157,30 @@ class _CartState extends State<Cart> {
                                               child: IconButton(
                                                 onPressed: () {
                                                   setState(() {
+                                                    double temprice =
+                                                        double.parse(snapshot
+                                                            .data!
+                                                            .docs[index]
+                                                                ['price']
+                                                            .toString());
+                                                    sum = sum + temprice;
+                                                    int sl = int.parse(snapshot
+                                                        .data!
+                                                        .docs[index]['quantity']
+                                                        .toString());
                                                     sl++;
+                                                    final r = FirebaseFirestore
+                                                        .instance
+                                                        .collection("Carts")
+                                                        .doc(
+                                                            "${snapshot.data!.docs[index]['id'].toString()}");
+                                                    r.update({'quantity': sl});
                                                   });
                                                 },
-                                                icon: Icon(Ionicons.add),
+                                                icon: Icon(
+                                                  Ionicons.add,
+                                                  color: AppColor.green,
+                                                ),
                                               ),
                                             ))
                                       ],
@@ -175,7 +214,7 @@ class _CartState extends State<Cart> {
                                     ),
                                     CustomTextGilroy_Bold(
                                       text:
-                                          "S${snapshot.data!.docs[index]['price'].toString()}",
+                                          "\$${snapshot.data!.docs[index]['price'].toString()}",
                                     ),
                                   ],
                                 )
@@ -193,20 +232,48 @@ class _CartState extends State<Cart> {
             }
           }),
       floatingActionButton: CusstomFloatingActionButtonCart(
-          onpresed: () {
-            showModalBottomSheet(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30))),
-              context: context,
-              builder: (context) {return
-                CusstomItemshowModalBottomSheet();
-              },
-            );
-          },
-          text: "Go To Checkout",sum: 12.96,),
+        onpresed: () {
+          showModalBottomSheet(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30))),
+            context: context,
+            builder: (context) {
+              return CusstomItemshowModalBottomSheet(sum: sum, f: carts);
+            },
+          );
+        },
+        text: "Go To Checkout",
+        sum: sum.roundToDouble(),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  // get data day vao list
+  fetchdatabaselist() async {
+    List items = [];
+    dynamic _cart = await Service().getData();
+    if (_cart == null) {
+      print('error');
+    } else {
+      items = _cart;
+      items.forEach((element) {
+        Carts a = new Carts(
+            id: element['id'],
+            name: element['name'],
+            image: element['image'],
+            price: element['price'],
+            detail: element['detail'],
+            quantity: element['quantity']);
+        carts.add(a);
+        setState(() {
+          //tinh tien cua cart
+          sum +=
+              double.parse(element['price'].toString()) * element['quantity'];
+        });
+      });
+    }
   }
 }

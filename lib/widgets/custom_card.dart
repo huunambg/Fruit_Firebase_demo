@@ -212,7 +212,7 @@ class _CustomCardState extends State<CustomCard> {
                                           ),
                                           onPressed: () {
                                             final x = Service();
-                                            final cart = Cart(quantity: 1);
+                                            final cart = Carts(quantity: 1);
                                             cart.name = snapshot
                                                 .data!.docs[index]['name'];
                                             cart.detail = snapshot

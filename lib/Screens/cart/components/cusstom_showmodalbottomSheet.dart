@@ -1,13 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:food_firebare_crud/Screens/cart/oder_apected.dart';
 import 'package:food_firebare_crud/Screens/detail/components/custom_floatingactionbutton.dart';
+import 'package:food_firebare_crud/model/class.dart';
+import 'package:food_firebare_crud/model/service.dart';
+import 'package:food_firebare_crud/screens/cart/cart.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
-
+// day la ModalBottom
 class CusstomItemshowModalBottomSheet extends StatefulWidget {
-  const CusstomItemshowModalBottomSheet({super.key});
-
+  const CusstomItemshowModalBottomSheet(
+      {super.key, required this.sum, required this.f});
+  final double? sum;
+  final List<Carts> f;
   @override
   State<CusstomItemshowModalBottomSheet> createState() =>
       _CusstomItemshowModalBottomSheetState();
@@ -180,7 +187,7 @@ class _CusstomItemshowModalBottomSheetState
                               Row(
                                 children: [
                                   CustomTextGilroy_Bold(
-                                    text: "S13.97",
+                                    text: "\$${widget.sum.toString()}",
                                     size: 15,
                                   ),
                                   IconButton(
@@ -216,6 +223,7 @@ class _CusstomItemshowModalBottomSheetState
                         Center(
                           child: CusstomFloatingActionButton(
                               onpresed: () {
+                                add();
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -223,8 +231,6 @@ class _CusstomItemshowModalBottomSheetState
                               },
                               text: "Place Order"),
                         )
-
-                        
                       ],
                     ),
                   ),
@@ -233,5 +239,23 @@ class _CusstomItemshowModalBottomSheetState
             )),
       ],
     );
+  }
+
+  void add() {
+    final delete = FirebaseFirestore.instance.collection("Carts");
+    widget.f.forEach((element) {
+      var x = Service();
+      Oder o = new Oder();
+      o.nameOder = element.name;
+      o.quantity = element.quantity;
+      o.image = element.image;
+      o.statusOder = 1;
+      o.money = double.parse(element.price.toString()) * double.parse(element.price.toString());
+      o.dateOder = DateTime.now();
+      o.expected = DateTime.now().toString();
+      o.detailOder = "Dang chuan bi";
+      delete.doc("${element.id}").delete();
+      x.addOder(o);
+    });
   }
 }
