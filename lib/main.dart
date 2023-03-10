@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_firebare_crud/Screens/singin/login.dart';
 import 'package:food_firebare_crud/Screens/root.dart';
+import 'package:food_firebare_crud/route.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 import 'Screens/onbording/onbording.dart';
 
@@ -31,8 +32,11 @@ class Mainpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<User?>(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      navigatorKey: AppRouter.navigatorKey,
+      home: Scaffold(
+          body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -47,7 +51,7 @@ class Mainpage extends StatelessWidget {
             return Login();
           }
         },
-      ),
+      )),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:food_firebare_crud/Screens/singin/login.dart';
 import 'package:food_firebare_crud/const/colors.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
+
 // day la man hinh dang ki
 class Singup extends StatelessWidget {
   const Singup({super.key});
@@ -126,18 +127,16 @@ class _sgState extends State<sg> {
       ),
     );
   }
+
 // su kien kiem tra  tai khoan so voi database
   void onpressed() {
     if (emailcontroller.text != '' && passwordcontroller.text != '') {
       if (passwordcontroller.text != retypepassword.text) {
-        CherryToast.error(title: Text("Mật khẩu nhập lại không khớp"))
+        CherryToast.error(title: Text("Re-entered password does not match"))
             .show(context);
       } else {
         singup();
       }
-    } else {
-      CherryToast.error(title: Text("Vui Lòng nhập kiểm tra dữ liệu nhập"))
-          .show(context);
     }
   }
 
@@ -147,8 +146,7 @@ class _sgState extends State<sg> {
           email: emailcontroller.text.trim(),
           password: passwordcontroller.text.trim());
     } on FirebaseAuthException catch (e) {
-      print(e);
-      CherryToast.error(title: Text("Email đã được sử dụng")).show(context);
+      CherryToast.error(title: Text(e.toString())).show(context);
     }
   }
 }

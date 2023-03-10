@@ -7,8 +7,12 @@ import 'package:food_firebare_crud/Screens/cart/oder_apected.dart';
 import 'package:food_firebare_crud/Screens/detail/components/custom_floatingactionbutton.dart';
 import 'package:food_firebare_crud/model/class.dart';
 import 'package:food_firebare_crud/model/service.dart';
+import 'package:food_firebare_crud/route.dart';
 import 'package:food_firebare_crud/screens/cart/cart.dart';
+import 'package:food_firebare_crud/screens/root.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
+import 'package:intl/intl.dart';
+
 // day la ModalBottom
 class CusstomItemshowModalBottomSheet extends StatefulWidget {
   const CusstomItemshowModalBottomSheet(
@@ -22,6 +26,7 @@ class CusstomItemshowModalBottomSheet extends StatefulWidget {
 
 class _CusstomItemshowModalBottomSheetState
     extends State<CusstomItemshowModalBottomSheet> {
+  var f = NumberFormat('###.0#', 'en_US');
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -187,7 +192,7 @@ class _CusstomItemshowModalBottomSheetState
                               Row(
                                 children: [
                                   CustomTextGilroy_Bold(
-                                    text: "\$${widget.sum.toString()}",
+                                    text: "\$${f.format(widget.sum)}",
                                     size: 15,
                                   ),
                                   IconButton(
@@ -224,10 +229,7 @@ class _CusstomItemshowModalBottomSheetState
                           child: CusstomFloatingActionButton(
                               onpresed: () {
                                 add();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => OderApected()));
+                                AppRouter.push(Root());
                               },
                               text: "Place Order"),
                         )
@@ -250,9 +252,12 @@ class _CusstomItemshowModalBottomSheetState
       o.quantity = element.quantity;
       o.image = element.image;
       o.statusOder = 1;
-      o.money = double.parse(element.price.toString()) * double.parse(element.price.toString());
-      o.dateOder = DateTime.now();
-      o.expected = DateTime.now().toString();
+      o.money = double.parse(element.price.toString()) *
+          double.parse(element.price.toString());
+      o.dateOder = (DateFormat('MM-dd-yyyy').format(DateTime.now())).toString();
+      ;
+      o.expected = (DateFormat('MM-dd-yyyy').format(DateTime.now())).toString();
+      ;
       o.detailOder = "Dang chuan bi";
       delete.doc("${element.id}").delete();
       x.addOder(o);

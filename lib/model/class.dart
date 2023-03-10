@@ -67,7 +67,7 @@ class Oder {
   String? detailOder;
   int? quantity;
   String? expected;
-  DateTime? dateOder;
+  String? dateOder;
 
   Oder(
       {this.idOder,

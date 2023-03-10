@@ -22,6 +22,8 @@ class _CustomCardState extends State<CustomCard> {
   final detailcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Container(
         height: 260,
         child: StreamBuilder<QuerySnapshot>(
@@ -39,7 +41,7 @@ class _CustomCardState extends State<CustomCard> {
                     return Container(
                       margin: EdgeInsets.only(right: 5),
                       child: SizedBox(
-                        width: 170,
+                        width: w * 0.45,
                         child: Card(
                           elevation: 0.4,
                           shape: RoundedRectangleBorder(
@@ -259,6 +261,8 @@ class CustomCardMini extends StatefulWidget {
 class _CustomCardMiniState extends State<CustomCardMini> {
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Container(
         height: 110,
         child: StreamBuilder<QuerySnapshot>(
@@ -276,7 +280,7 @@ class _CustomCardMiniState extends State<CustomCardMini> {
                     return Container(
                       margin: EdgeInsets.only(right: 10),
                       child: SizedBox(
-                        width: 250,
+                        width: w * 0.65,
                         child: Card(
                           color: Color.fromARGB(255, 212, 155, 181),
                           elevation: 0.4,

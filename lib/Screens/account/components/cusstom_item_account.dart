@@ -11,6 +11,7 @@ class CusstomItemAcount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: onpressed,
       child: Container(

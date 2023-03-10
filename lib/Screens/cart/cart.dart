@@ -9,6 +9,7 @@ import 'package:food_firebare_crud/model/service.dart';
 import 'package:food_firebare_crud/screens/cart/components/cusstom_floatingactionbutton_cart.dart';
 import 'package:food_firebare_crud/Screens/cart/components/cusstom_showModalBottomSheet.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
+import 'package:intl/intl.dart';
 
 import 'package:ionicons/ionicons.dart';
 
@@ -21,6 +22,7 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   double sum = 0;
+  var f = NumberFormat('###.0#', 'en_US');
   List<Carts> carts = [];
   @override
   void initState() {
@@ -32,6 +34,8 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+            side: BorderSide(color: Color.fromARGB(255, 247, 234, 234))),
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -54,8 +58,6 @@ class _CartState extends State<Cart> {
                     return Container(
                       decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(
-                                  color: Color.fromARGB(255, 239, 231, 231)),
                               bottom: BorderSide(
                                   color: Color.fromARGB(255, 247, 234, 234)))),
                       margin: EdgeInsets.only(right: 10),
@@ -245,7 +247,7 @@ class _CartState extends State<Cart> {
           );
         },
         text: "Go To Checkout",
-        sum: sum.roundToDouble(),
+        sum: double.parse(f.format(sum)),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

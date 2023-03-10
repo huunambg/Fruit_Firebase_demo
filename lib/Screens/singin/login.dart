@@ -4,8 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_firebare_crud/Screens/singup/singup.dart';
 import 'package:food_firebare_crud/const/colors.dart';
+import 'package:food_firebare_crud/main.dart';
+import 'package:food_firebare_crud/route.dart';
 import 'package:food_firebare_crud/widgets/custom_text.dart';
 // day la man hinh login
+
 class Login extends StatelessWidget {
   const Login({super.key});
 
@@ -51,6 +54,7 @@ class _lgState extends State<lg> {
         child: ListView(
           children: [
             TextField(
+                textInputAction: TextInputAction.next,
                 controller: emailcontroller,
                 decoration: InputDecoration(
                     labelText: "Email",
@@ -118,9 +122,9 @@ class _lgState extends State<lg> {
           email: emailcontroller.text.trim(),
           password: passwordcontroller.text.trim());
     } on FirebaseAuthException catch (e) {
-      print(e);
-      CherryToast.error(title: Text("Tài Khoản hoặc mật khẩu không chính xác"))
-          .show(context);
+      CherryToast.error(title: Text(e.toString())).show(context);
     }
+    AppRouter.navigatorKey.currentState!.popUntil((route) => route.isFirst);
+
   }
 }

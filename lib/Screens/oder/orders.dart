@@ -23,6 +23,8 @@ class _OrdersState extends State<Orders> {
   double sum = 0;
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         shape: RoundedRectangleBorder(
@@ -52,13 +54,13 @@ class _OrdersState extends State<Orders> {
 
                     //customcard
                     return Container(
+                      height: h * 0.19,
                       decoration: BoxDecoration(
                           border: Border(
                               bottom: BorderSide(
                                   color: Color.fromARGB(255, 247, 234, 234)))),
                       margin: EdgeInsets.only(right: 10),
                       child: SizedBox(
-                        width: 180,
                         child: InkWell(
                           onTap: () {
                             Navigator.push(
