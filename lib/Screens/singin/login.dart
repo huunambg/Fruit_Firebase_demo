@@ -54,7 +54,6 @@ class _lgState extends State<lg> {
         child: ListView(
           children: [
             TextField(
-                textInputAction: TextInputAction.next,
                 controller: emailcontroller,
                 decoration: InputDecoration(
                     labelText: "Email",
@@ -125,6 +124,5 @@ class _lgState extends State<lg> {
       CherryToast.error(title: Text(e.toString())).show(context);
     }
     AppRouter.navigatorKey.currentState!.popUntil((route) => route.isFirst);
-
   }
 }

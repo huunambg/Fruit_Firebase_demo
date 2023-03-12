@@ -27,7 +27,7 @@ class sg extends StatefulWidget {
 }
 
 class _sgState extends State<sg> {
-  bool ischeckpass = true;
+  bool ischeckpass = false;
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
   final retypepassword = TextEditingController();
@@ -85,16 +85,7 @@ class _sgState extends State<sg> {
                 obscureText: ischeckpass,
                 controller: retypepassword,
                 decoration: InputDecoration(
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          ischeckpass = !ischeckpass;
-                        });
-                      },
-                      child: Icon(ischeckpass
-                          ? Icons.visibility
-                          : Icons.visibility_off),
-                    ),
+                
                     labelText: "Retype-Password",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20)))),
